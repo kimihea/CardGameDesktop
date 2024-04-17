@@ -24,7 +24,7 @@ public class Level : MonoBehaviour
     public void setEasy()           //이지 변수값 설정
     {
         PlayerPrefs.SetInt("level", 0);
-        PlayerPrefs.SetInt("cardNumber", 10);
+        PlayerPrefs.SetInt("cardNumber", 12);
     }
     public void setNormal()         //노말 변수값 설정
     {
