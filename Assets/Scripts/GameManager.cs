@@ -192,3 +192,4 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 }
+//별의미없지만 git commit실험하기 위해 적어둔 주석
