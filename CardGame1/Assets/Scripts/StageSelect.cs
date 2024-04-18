@@ -12,6 +12,7 @@ public class StageSelect : MonoBehaviour
     public void ExitMenu()
     {
         gameObject.SetActive(false);
+        AudioManager.Instance.unPauseMusic();
     }
 
    
