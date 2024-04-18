@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +14,7 @@ public class StageSelect : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    // Å×½ºÆ®¿ë
+   
     public void LoadScene()
     {
         SceneManager.LoadScene(1);

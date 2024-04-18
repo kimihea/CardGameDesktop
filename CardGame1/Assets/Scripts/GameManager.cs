@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
 
-        if (time > 25.0f && !isWarnPlayed) // 25ÃÊ°¡ ³Ñ¾î°¡¸é »¡°£»öÀ¸·Î ÀüÈ¯
+        if (time > 25.0f && !isWarnPlayed) // 
         {
             timeTxt.color = new Color(255f, 0f, 0f, 255f);
             AudioManager.Instance.PlayAudioWarning();
@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
     {
         if (firstCard.idx == secondCard.idx)
         {
-            // ÆÄ±«ÇØ¶ó.
+            
             audioSource.PlayOneShot(clip);
             firstCard.DestoryCard();
             secondCard.DestoryCard();
@@ -84,26 +84,26 @@ public class GameManager : MonoBehaviour
 
             resultTxt.text = "<color=#5070f9></color>";
             switch (secondCard.idx)
-            {            //  idx ¼ıÀÚ¸¶´Ù textÀÇ ³»¿ë º¯°æ    
+            {            //  
                 case 1:
                 case 2:
-                    resultTxt.text = "±èÈñÈ¯";
+                    resultTxt.text = "ê¹€í¬í™˜";
                     break;
                 case 3:
                 case 4:
-                    resultTxt.text = "Å¹ÇõÀç";
+                    resultTxt.text = "íƒí˜ì¬";
                     break;
                 case 5:
                 case 6:
-                    resultTxt.text = "°í¿¹ÁØ";
+                    resultTxt.text = "ê³ ì˜ˆì¤€";
                     break;
                 case 7:
                 case 8:
-                    resultTxt.text = "¹®º´ÁØ";
+                    resultTxt.text = "ë¬¸ë³‘ì¤€";
                     break;
                 case 9:
                 case 10:
-                    resultTxt.text = "¹ÚµµÇö";
+                    resultTxt.text = "ë°•ë„í˜„";
                     break;
             }
 
@@ -118,23 +118,23 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // ´İ¾Æ¶ó.
+            // 
             firstCard.CloseCard();
             secondCard.CloseCard();
-            resultTxt.text = "<color=#FF0000>½ÇÆĞ</color>";
+            resultTxt.text = "<color=#FF0000>ï¿½ï¿½ï¿½ï¿½</color>";
             audioSource.PlayOneShot(audioClipFail);
         }
         resultTxt.gameObject.SetActive(true);
-        StartCoroutine(SetActiveFalse());           //SetActiveFalseÄÚ·çÆ¾ ½ÇÇà
+        StartCoroutine(SetActiveFalse());           //SetActiveFalse
 
         flipCount++;
         firstCard = null;
         secondCard = null;
     }
 
-    IEnumerator SetActiveFalse()             //CoroutineÀ» ÀÌ¿ëÇÑ Áö¿¬Ã³¸®
+    IEnumerator SetActiveFalse()             //Coroutine
     {
-        yield return new WaitForSeconds(0.3f);  //0.3ÃÊÈÄ ÅØ½ºÆ® ºñÈ°¼ºÈ­
+        yield return new WaitForSeconds(0.3f);  //0.3
         resultTxt.gameObject.SetActive(false);
     }
 
