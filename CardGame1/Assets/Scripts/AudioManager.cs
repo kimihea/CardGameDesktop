@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,17 +41,5 @@ public class AudioManager : MonoBehaviour
     public void PlayAudioWarning()
     {
         audioSource.PlayOneShot(audioWarning);
-    }
-
-    public void pauseMusic()
-    {
-        audioSource.Pause();
-    }
-    public void unPauseMusic()
-    {
-        if (!audioSource.isPlaying)
-        {
-            audioSource.UnPause();
-        }
     }
 }
