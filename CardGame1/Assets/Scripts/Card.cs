@@ -44,8 +44,11 @@ public class Card : MonoBehaviour
         }
         else
         {
-            GameManager.Instance.secondCard = this;
-            GameManager.Instance.Matched();
+            if(GameManager.Instance.firstCard != this)
+            {
+                GameManager.Instance.secondCard = this;
+                GameManager.Instance.Matched();
+            }
         }
     }
 
