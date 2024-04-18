@@ -64,8 +64,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        timeTxt.text = time.ToString("N2");
+        if(isPlaying) 
+        {
+            time += Time.deltaTime;
+            timeTxt.text = time.ToString("N2");
+        }
 
         if (time > countTime && isPlaying)
         {
@@ -133,6 +136,7 @@ public class GameManager : MonoBehaviour
                 endTxt.SetActive(true);
                 stageSelect.SetActive(true);
                 Time.timeScale = 0.0f;
+                isPlaying = false;
                 EndGame();
 
                 if(PlayerPrefs.HasKey("BestTime" + nowDiff))
