@@ -89,17 +89,17 @@ public class GameManager : MonoBehaviour
 
         if (time - firstSelectedTime > 5 && firstSelected)
         {
+            firstSelected = false;
             firstCard.CloseCard();
             firstCard = null;
-            firstSelected = false;
         }
     }
 
     public void Matched()
     {
+        firstSelected = false;
         if (firstCard.idx == secondCard.idx)
         {
-            firstSelected = false;
             // 파괴해라.
             audioSource.PlayOneShot(clip);
             firstCard.DestoryCard();
@@ -137,9 +137,11 @@ public class GameManager : MonoBehaviour
                 stageSelect.SetActive(true);
                 Time.timeScale = 0.0f;
                 isPlaying = false;
+                Rank();
                 EndGame();
 
-                if(PlayerPrefs.HasKey("BestTime" + nowDiff))
+
+                if (PlayerPrefs.HasKey("BestTime" + nowDiff))
                 {
                     if(PlayerPrefs.GetFloat("BestTime"+nowDiff) > time)
                     {
@@ -180,7 +182,7 @@ public class GameManager : MonoBehaviour
     {
         StageSelect stage = stageSelect.GetComponent<StageSelect>();
         stage.ApplyScore(flipCount);
-        Rank();
+     
         scoreTxt.text = (-(cardCount - 20) + (countTime - (int)time) - flipCount).ToString();
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class Card : MonoBehaviour
     public GameObject front;
     public GameObject back;
     public SpriteRenderer backImage;
+    public Button cardButton;
 
     public Animator anim;
 
@@ -30,8 +32,6 @@ public class Card : MonoBehaviour
 
     public void OpenCard()
     {
-        if (GameManager.Instance.secondCard != null) return;
-
         audioSource.PlayOneShot(clip);
         anim.SetBool("isOpen", true);
         front.SetActive(true);

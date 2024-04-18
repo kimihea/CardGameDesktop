@@ -52,6 +52,7 @@ MonoBehaviour:
   front: {fileID: 6684146574578150734}
   back: {fileID: 4829914102082854726}
   backImage: {fileID: 2386060527561744482}
+  cardButton: {fileID: 7244876346277006829}
   anim: {fileID: 950413156110918975}
   clip: {fileID: 8300000, guid: 613f6efd64d12de4abb0d85cd070b520, type: 3}
   frontImage: {fileID: 203580372886617036}
