@@ -24,7 +24,11 @@ public class Card : MonoBehaviour
     public void Setting(int number)
     {
         idx = number;
+<<<<<<< Updated upstream
         frontImage.sprite = Resources.Load<Sprite>($"rtan{idx}");
+=======
+        frontImage.sprite = Resources.Load<Sprite>($"카드 이미지/Image{idx}");
+>>>>>>> Stashed changes
     }
 
     public void OpenCard()
