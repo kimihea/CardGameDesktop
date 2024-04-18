@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
             // 
             firstCard.CloseCard();
             secondCard.CloseCard();
-            resultTxt.text = "<color=#FF0000>실패</color>";
+            resultTxt.text = "<color=#FF0000>����</color>";
             audioSource.PlayOneShot(audioClipFail);
         }
         resultTxt.gameObject.SetActive(true);
