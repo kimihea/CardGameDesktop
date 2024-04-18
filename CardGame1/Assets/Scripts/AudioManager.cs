@@ -8,6 +8,8 @@ public class AudioManager : MonoBehaviour
 
     AudioSource audioSource;
     public AudioClip clip;
+    public AudioClip audioStart;
+    public AudioClip audioWarning;
 
     private void Awake()
     {
@@ -29,5 +31,15 @@ public class AudioManager : MonoBehaviour
 
         audioSource.clip = this.clip;
         audioSource.Play();
+    }
+
+    public void StartButton()   //버튼컴포넌트 연결
+    {
+        audioSource.PlayOneShot(audioStart);
+    }
+
+    public void PlayAudioWarning()
+    {
+        audioSource.PlayOneShot(audioWarning);
     }
 }

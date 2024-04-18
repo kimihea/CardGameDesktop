@@ -8,6 +8,7 @@ public class Card : MonoBehaviour
 
     public GameObject front;
     public GameObject back;
+    public SpriteRenderer backImage;
 
     public Animator anim;
 
@@ -24,11 +25,10 @@ public class Card : MonoBehaviour
     public void Setting(int number)
     {
         idx = number;
-<<<<<<< Updated upstream
-        frontImage.sprite = Resources.Load<Sprite>($"rtan{idx}");
-=======
+
         frontImage.sprite = Resources.Load<Sprite>($"카드 이미지/Image{idx}");
->>>>>>> Stashed changes
+
+
     }
 
     public void OpenCard()
@@ -71,5 +71,6 @@ public class Card : MonoBehaviour
         anim.SetBool("isOpen", false);
         front.SetActive(false);
         back.SetActive(true);
+        backImage.color = new Color(180f / 255f, 180f / 255f, 180f / 255f);
     }
 }
