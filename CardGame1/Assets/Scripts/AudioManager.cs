@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void StartButton()   //¹öÆ°ÄÄÆ÷³ÍÆ® ¿¬°á
+    public void StartButton()   //
     {
         audioSource.PlayOneShot(audioStart);
     }
@@ -41,5 +41,17 @@ public class AudioManager : MonoBehaviour
     public void PlayAudioWarning()
     {
         audioSource.PlayOneShot(audioWarning);
+    }
+
+    public void pauseMusic()
+    {
+        audioSource.Pause();
+    }
+    public void unPauseMusic()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.UnPause();
+        }
     }
 }
