@@ -10,7 +10,7 @@ public class Board : MonoBehaviour
     void Start()
     {
         int[] arr = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6 ,7, 7, 8, 8, 9, 9 };
-        arr = arr.OrderBy(x => Random.Range(0f, 7f)).ToArray();
+        arr = arr.OrderBy(x => Random.Range(0f, 9f)).ToArray();
 
         for (int i = 0; i < 20; i++)
         {

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     public GameObject endTxt;
     public Text resultTxt;
     public Text flipCountTxt;
+    public Text scoreTxt;
+    public Text bestTimeTxt;
 
     AudioSource audioSource;
     public AudioClip clip;
@@ -25,11 +27,19 @@ public class GameManager : MonoBehaviour
 
     public int cardCount = 0;
     float time = 0.0f;
+    float countTime = 0.0f;
 
     bool isPlaying = true;
     bool isWarnPlayed = false;
+    bool firstSelected = false;
+
+    float firstSelectedTime = 0.0f;
 
     int flipCount = 0;
+
+    float timePenalty = 0f;
+
+    int nowDiff = 0;
 
     private void Awake()
     {
@@ -37,6 +47,8 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        GetDiff();
     }
 
     // Start is called before the first frame update
@@ -44,8 +56,9 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         audioSource = GetComponent<AudioSource>();
-        time = 23.0f;
         isPlaying = true;
+        
+        bestTimeTxt.text = PlayerPrefs.GetFloat("BestTime" + nowDiff).ToString("N2");
     }
 
     // Update is called once per frame
@@ -54,7 +67,7 @@ public class GameManager : MonoBehaviour
         time += Time.deltaTime;
         timeTxt.text = time.ToString("N2");
 
-        if (time > 30.0f && isPlaying)
+        if (time > countTime && isPlaying)
         {
             endTxt.SetActive(true);
             stageSelect.SetActive(true);
@@ -64,11 +77,18 @@ public class GameManager : MonoBehaviour
             EndGame();
         }
 
-        if (time > 25.0f && !isWarnPlayed) // 25ÃÊ°¡ ³Ñ¾î°¡¸é »¡°£»öÀ¸·Î ÀüÈ¯
+        if (time > countTime - 5.0f && !isWarnPlayed) // 25ì´ˆê°€ ë„˜ì–´ê°€ë©´ ë¹¨ê°„ìƒ‰ìœ¼ë¡œ ì „í™˜
         {
             timeTxt.color = new Color(255f, 0f, 0f, 255f);
             AudioManager.Instance.PlayAudioWarning();
             isWarnPlayed = true;
+        }
+
+        if (time - firstSelectedTime > 5 && firstSelected)
+        {
+            firstCard.CloseCard();
+            firstCard = null;
+            firstSelected = false;
         }
     }
 
@@ -76,7 +96,8 @@ public class GameManager : MonoBehaviour
     {
         if (firstCard.idx == secondCard.idx)
         {
-            // ÆÄ±«ÇØ¶ó.
+            firstSelected = false;
+            // íŒŒê´´í•´ë¼.
             audioSource.PlayOneShot(clip);
             firstCard.DestoryCard();
             secondCard.DestoryCard();
@@ -84,26 +105,26 @@ public class GameManager : MonoBehaviour
 
             resultTxt.text = "<color=#5070f9></color>";
             switch (secondCard.idx)
-            {            //  idx ¼ıÀÚ¸¶´Ù textÀÇ ³»¿ë º¯°æ    
+            {            //  idx ìˆ«ìë§ˆë‹¤ textì˜ ë‚´ìš© ë³€ê²½    
+                case 0:
                 case 1:
+                    resultTxt.text = "ê¹€í¬í™˜";
+                    break;
                 case 2:
-                    resultTxt.text = "±èÈñÈ¯";
-                    break;
                 case 3:
+                    resultTxt.text = "íƒí˜ì¬";
+                    break;
                 case 4:
-                    resultTxt.text = "Å¹ÇõÀç";
-                    break;
                 case 5:
+                    resultTxt.text = "ê³ ì˜ˆì¤€";
+                    break;
                 case 6:
-                    resultTxt.text = "°í¿¹ÁØ";
-                    break;
                 case 7:
-                case 8:
-                    resultTxt.text = "¹®º´ÁØ";
+                    resultTxt.text = "ë¬¸ë³‘ì¤€";
                     break;
+                case 8:
                 case 9:
-                case 10:
-                    resultTxt.text = "¹ÚµµÇö";
+                    resultTxt.text = "ë°•ë„í˜„";
                     break;
             }
 
@@ -113,28 +134,41 @@ public class GameManager : MonoBehaviour
                 stageSelect.SetActive(true);
                 Time.timeScale = 0.0f;
                 EndGame();
+
+                if(PlayerPrefs.HasKey("BestTime" + nowDiff))
+                {
+                    if(PlayerPrefs.GetFloat("BestTime"+nowDiff) > time)
+                    {
+                        PlayerPrefs.SetFloat("BestTime" + nowDiff, time);
+                    }
+                }
+                else
+                {
+                    PlayerPrefs.SetFloat("BestTime" + nowDiff, time);
+                }
             }
 
         }
         else
         {
-            // ´İ¾Æ¶ó.
+            time += timePenalty;
+            // ë‹«ì•„ë¼.
             firstCard.CloseCard();
             secondCard.CloseCard();
-            resultTxt.text = "<color=#FF0000>½ÇÆĞ</color>";
+            resultTxt.text = "<color=#FF0000>ì‹¤íŒ¨</color>";
             audioSource.PlayOneShot(audioClipFail);
         }
         resultTxt.gameObject.SetActive(true);
-        StartCoroutine(SetActiveFalse());           //SetActiveFalseÄÚ·çÆ¾ ½ÇÇà
+        StartCoroutine(SetActiveFalse());           //SetActiveFalseì½”ë£¨í‹´ ì‹¤í–‰
 
         flipCount++;
         firstCard = null;
         secondCard = null;
     }
 
-    IEnumerator SetActiveFalse()             //CoroutineÀ» ÀÌ¿ëÇÑ Áö¿¬Ã³¸®
+    IEnumerator SetActiveFalse()             //Coroutineì„ ì´ìš©í•œ ì§€ì—°ì²˜ë¦¬
     {
-        yield return new WaitForSeconds(0.3f);  //0.3ÃÊÈÄ ÅØ½ºÆ® ºñÈ°¼ºÈ­
+        yield return new WaitForSeconds(0.3f);  //0.3ì´ˆí›„ í…ìŠ¤íŠ¸ ë¹„í™œì„±í™”
         resultTxt.gameObject.SetActive(false);
     }
 
@@ -142,6 +176,51 @@ public class GameManager : MonoBehaviour
     {
         StageSelect stage = stageSelect.GetComponent<StageSelect>();
         stage.ApplyScore(flipCount);
+        Rank();
+        scoreTxt.text = (-(cardCount - 20) + (countTime - (int)time) - flipCount).ToString();
+    }
+
+    public void SetFirstCardTime()
+    {
+        firstSelectedTime = time;
+        firstSelected = true;
+    }
+
+    void Rank()
+    {
+        //ì¶”ê°€ì ìœ¼ë¡œ ë‚œì´ë„ë¥¼ í´ë¦¬ì–´í–ˆëŠ”ì§€ ê²€ì‚¬
+        if (PlayerPrefs.HasKey("isClear"))
+        {
+            int getDiff = PlayerPrefs.GetInt("isClear");
+            if ((nowDiff >= getDiff)) //í˜„ì¬ ë‚œì´ë„ê°€ isClearì˜ ìˆëŠ” ë‚œì´ë„ë³´ë‹¤ ë†’ìœ¼ë©´
+                PlayerPrefs.SetInt("isClear", nowDiff);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isClear", nowDiff);
+        }
+    }
+    void GetDiff()  //ë‚œì´ë„ ì„¤ì •
+    {
+        if (PlayerPrefs.HasKey("Difficality"))
+        {
+            nowDiff = PlayerPrefs.GetInt("Difficality");
+        }
+
+        switch (nowDiff)
+        {
+            case 1:
+                countTime = 60f;
+                break;
+            case 2:
+                countTime = 60f;
+                timePenalty = 0.5f;
+                break;
+            case 3:
+                countTime = 45f;
+                timePenalty = 0.5f;
+                break;
+        }
     }
 }
 

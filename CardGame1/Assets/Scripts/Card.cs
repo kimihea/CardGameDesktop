@@ -25,7 +25,7 @@ public class Card : MonoBehaviour
     public void Setting(int number)
     {
         idx = number;
-        frontImage.sprite = Resources.Load<Sprite>($"Ä«µå ÀÌ¹ÌÁö/Image{idx}");
+        frontImage.sprite = Resources.Load<Sprite>($"ì¹´ë“œ ì´ë¯¸ì§€/Image{idx}");
     }
 
     public void OpenCard()
@@ -40,6 +40,7 @@ public class Card : MonoBehaviour
         if(GameManager.Instance.firstCard == null)
         {
             GameManager.Instance.firstCard = this;
+            GameManager.Instance.SetFirstCardTime();
         }
         else
         {
