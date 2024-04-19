@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
-    public void StartButton()   //버튼컴포넌트 연결
+    public void StartButton()   //
     {
         audioSource.PlayOneShot(audioStart);
     }
